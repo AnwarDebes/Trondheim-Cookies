@@ -146,7 +146,7 @@ const I18N = {
     fldWhen: "Preferred day/time", phWhen: "e.g. Sat afternoon",
     fldNotes: "Notes (optional)", phNotes: "Allergies, doorbell, gift message…",
     submitBtn: "Send my order",
-    formFoot: "Your order opens in your email app, ready to send to our bakery.",
+    formFoot: "Your order is sent straight to our bakery.",
     storyEyebrow: "Our promise",
     storyTitle: "Every cookie helps a child in Syria.",
     storyBody: "We started Trondheim Cookies with one simple idea: something as small as a cookie can do something big. That's why <b>10% of the price of every cookie</b> goes directly to helping children in need in Syria. You enjoy the cookie. A child gets help. That's the whole deal.",
@@ -157,8 +157,8 @@ const I18N = {
     footDelivery: "Delivery", footDel1: "Trondheim area only", footDel2: "Pay on delivery", footDel3: "Vipps or cash",
     footProm1: "10% to children in need in Syria", footProm2: "Handmade, baked to order",
     footCopy: "© 2026 TRONDHEIM COOKIES · MADE IN NORWAY", footTag: "BUY WITH MEANING ♥",
-    successTitle: "Order ready to send!",
-    successBody: "Your order just opened in your email app. Press <b>send</b> and we'll get baking.",
+    successTitle: "Order sent!",
+    successBody: "Your order is on its way to our bakery. We'll get baking and be in touch to confirm delivery.",
     successThanks: "Thank you for helping children in need in Syria. ♥",
     successBack: "Back to cookies",
     toastDefault: "Added to basket",
@@ -227,7 +227,7 @@ const I18N = {
     evName: "Your name", evPhone: "Phone",
     evIdeas: "Your ideas & the vibe", evIdeasPh: "Theme, flavours, colours, anything you're dreaming of…",
     evFormSubmit: "Send my enquiry",
-    evFormFoot: "This opens your email app with the details, ready to send to us.",
+    evFormFoot: "This sends your enquiry straight to us.",
     evThanks: "Enquiry ready to send \uD83C\uDF89",
     evMailSubject: "Event enquiry · Trondheim Cookies",
     evMailBody: (d) => `Hi Trondheim Cookies,\n\nI'd love to plan an event with you.\n\nOccasion: ${d.occ}\nDate: ${d.date}\nGuests: ${d.guests}\n\nMy ideas:\n${d.ideas}\n\nName: ${d.name}\nPhone: ${d.phone}\n\nLooking forward to planning together!`,
@@ -299,7 +299,7 @@ const I18N = {
     fldWhen: "Ønsket dag/tid", phWhen: "f.eks. lørdag ettermiddag",
     fldNotes: "Notater (valgfritt)", phNotes: "Allergier, ringeklokke, gavemelding…",
     submitBtn: "Send bestillingen min",
-    formFoot: "Bestillingen din åpnes i e-postappen din, klar til å sende til bakeriet vårt.",
+    formFoot: "Bestillingen din sendes rett til bakeriet vårt.",
     storyEyebrow: "Vårt løfte",
     storyTitle: "Hver cookie hjelper et barn i nød i Syria.",
     storyBody: "Vi startet Trondheim Cookies med én enkel idé: noe så lite som en cookie kan utrette noe stort. Derfor går <b>10% av prisen på hver cookie</b> direkte til å hjelpe barn i nød i Syria. Du nyter cookien. Et barn får hjelp. Så enkelt er det.",
@@ -310,8 +310,8 @@ const I18N = {
     footDelivery: "Levering", footDel1: "Kun Trondheimsområdet", footDel2: "Betal ved levering", footDel3: "Vipps eller kontant",
     footProm1: "10% til barn i nød i Syria", footProm2: "Håndlaget, bakt på bestilling",
     footCopy: "© 2026 TRONDHEIM COOKIES · LAGET I NORGE", footTag: "KJØP MED MENING ♥",
-    successTitle: "Bestillingen er klar til å sendes!",
-    successBody: "Bestillingen din åpnet seg nettopp i e-postappen din. Trykk <b>send</b>, så setter vi i gang å bake.",
+    successTitle: "Bestillingen er sendt!",
+    successBody: "Bestillingen din er på vei til bakeriet vårt. Vi setter i gang å bake og tar kontakt for å bekrefte levering.",
     successThanks: "Takk for at du hjelper barn i nød i Syria. ♥",
     successBack: "Tilbake til cookies",
     toastDefault: "Lagt i kurven",
@@ -380,7 +380,7 @@ const I18N = {
     evName: "Navnet ditt", evPhone: "Telefon",
     evIdeas: "Idéene dine & stemningen", evIdeasPh: "Tema, smaker, farger, alt du drømmer om…",
     evFormSubmit: "Send forespørselen min",
-    evFormFoot: "Dette åpner e-postappen din med detaljene, klar til å sende til oss.",
+    evFormFoot: "Dette sender forespørselen din rett til oss.",
     evThanks: "Forespørselen er klar til å sendes \uD83C\uDF89",
     evMailSubject: "Arrangementsforespørsel · Trondheim Cookies",
     evMailBody: (d) => `Hei Trondheim Cookies,\n\nJeg vil gjerne planlegge et arrangement med dere.\n\nAnledning: ${d.occ}\nDato: ${d.date}\nGjester: ${d.guests}\n\nIdéene mine:\n${d.ideas}\n\nNavn: ${d.name}\nTelefon: ${d.phone}\n\nGleder meg til å planlegge sammen!`,
@@ -453,7 +453,7 @@ const I18N = {
     fldWhen: "اليوم/الوقت المفضل", phWhen: "مثال: السبت بعد الظهر",
     fldNotes: "ملاحظات (اختياري)", phNotes: "حساسية، جرس الباب، رسالة هدية…",
     submitBtn: "أرسل طلبي",
-    formFoot: "يفتح طلبك في تطبيق البريد لديك، جاهزًا للإرسال إلى مخبزنا.",
+    formFoot: "يُرسَل طلبك مباشرة إلى مخبزنا.",
     storyEyebrow: "وعدنا",
     storyTitle: "كل كوكي يساعد طفلاً في سوريا.",
     storyBody: "بدأنا تروندهايم كوكيز بفكرة بسيطة: شيء صغير ككوكي يمكن أن يصنع شيئًا كبيرًا. لذلك <b>10% من سعر كل كوكي</b> يذهب مباشرة لمساعدة أطفال سوريا المحتاجين. أنت تستمتع بالكوكي. وطفل يحصل على المساعدة. هذا كل شيء.",
@@ -464,8 +464,8 @@ const I18N = {
     footDelivery: "التوصيل", footDel1: "منطقة تروندهايم فقط", footDel2: "الدفع عند الاستلام", footDel3: "Vipps أو نقدًا",
     footProm1: "10% لأطفال سوريا المحتاجين", footProm2: "مصنوع يدويًا، يُخبز عند الطلب",
     footCopy: "© 2026 تروندهايم كوكيز · صُنع في النرويج", footTag: "اشترِ بمعنى ♥",
-    successTitle: "الطلب جاهز للإرسال!",
-    successBody: "فُتح طلبك للتو في تطبيق البريد. اضغط <b>إرسال</b> وسنبدأ الخبز.",
+    successTitle: "تم إرسال الطلب!",
+    successBody: "طلبك في طريقه إلى مخبزنا. سنبدأ الخبز ونتواصل معك لتأكيد التوصيل.",
     successThanks: "شكرًا لمساعدتك أطفال سوريا المحتاجين. ♥",
     successBack: "العودة إلى الكوكيز",
     toastDefault: "أُضيفت إلى السلة",
@@ -534,7 +534,7 @@ const I18N = {
     evName: "اسمك", evPhone: "الهاتف",
     evIdeas: "أفكارك والأجواء", evIdeasPh: "الثيم، النكهات، الألوان، أي شيء تحلم به…",
     evFormSubmit: "أرسل استفساري",
-    evFormFoot: "يفتح هذا تطبيق البريد لديك مع التفاصيل، جاهزًا للإرسال إلينا.",
+    evFormFoot: "يُرسِل هذا استفسارك مباشرة إلينا.",
     evThanks: "الاستفسار جاهز للإرسال \uD83C\uDF89",
     evMailSubject: "استفسار مناسبة · تروندهايم كوكيز",
     evMailBody: (d) => `مرحبًا تروندهايم كوكيز،\n\nأودّ التخطيط لمناسبة معكم.\n\nالمناسبة: ${d.occ}\nالتاريخ: ${d.date}\nالضيوف: ${d.guests}\n\nأفكاري:\n${d.ideas}\n\nالاسم: ${d.name}\nالهاتف: ${d.phone}\n\nأتطلّع للتخطيط معًا!`,
@@ -987,17 +987,26 @@ ${t("mailNotes")}:   ${notes || "-"}
 ${t("mailThanks")}`;
 
   const subject = t("mailSubject")(name, count);
-  // Send straight to the bakery inbox via FormSubmit (no email app needed)
-  fetch("https://formsubmit.co/ajax/" + ORDER_EMAIL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Accept": "application/json" },
-    body: JSON.stringify({ _subject: subject, _replyto: email, Name: name, Email: email, Order: body })
-  }).catch(() => {
-    window.location.href = `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  });
+  // Send straight to the bakery inbox via our SendGrid endpoint (no email app needed).
+  sendToBakery({ subject, text: body, replyTo: email });
 
   $("success").classList.add("show");
   return false;
+}
+
+/* Deliver a message to the bakery inbox through /api/order (SendGrid).
+   Falls back to opening the visitor's email app if the request fails. */
+function sendToBakery({ subject, text, replyTo }) {
+  return fetch("/api/order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ subject, text, replyTo: replyTo || "" }),
+  })
+    .then((r) => { if (!r.ok) throw new Error("send failed"); return r; })
+    .catch(() => {
+      window.location.href =
+        `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+    });
 }
 function closeSuccess() {
   $("success").classList.remove("show");
@@ -1054,7 +1063,7 @@ function submitReview(e) {
   if (!name || !text) return false;
   const stars = "\u2605".repeat(starSel) + "\u2606".repeat(5 - starSel);
   const body = `${stars} (${starSel}/5)\n\n${text}\n\n${name}`;
-  window.location.href = `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(t("revMailSubject"))}&body=${encodeURIComponent(body)}`;
+  sendToBakery({ subject: t("revMailSubject"), text: body });
   $("rvName").value = ""; $("rvText").value = ""; starSel = 0;
   renderStarInput();
   toast(t("revThanks"));
@@ -1065,8 +1074,7 @@ function submitReview(e) {
    EVENT ENQUIRY (bigger happenings)
    ============================================================ */
 function eventEnquiry() {
-  const mailto = `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(t("mailEventSubject"))}&body=${encodeURIComponent(t("mailEventBody"))}`;
-  window.location.href = mailto;
+  sendToBakery({ subject: t("mailEventSubject"), text: t("mailEventBody") });
 }
 function eventSubmit(e) {
   e.preventDefault();
@@ -1080,7 +1088,7 @@ function eventSubmit(e) {
     phone: $("evPhone").value.trim(),
     ideas: $("evIdeas").value.trim() || "-",
   };
-  window.location.href = `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(t("evMailSubject"))}&body=${encodeURIComponent(t("evMailBody")(d))}`;
+  sendToBakery({ subject: t("evMailSubject"), text: t("evMailBody")(d), replyTo: "" });
   toast(t("evThanks"));
   return false;
 }
