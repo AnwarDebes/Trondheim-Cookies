@@ -369,6 +369,9 @@
     .hero-grid, .build-grid, .order-grid, .story-grid { grid-template-columns: 1fr; }
     .cookies { grid-template-columns: repeat(2, 1fr); }
     .nav-links { display: none; }
+    /* Drop the sticky preview card on mobile so it flows normally (no overlap),
+       but keep it positioned so the "Coming soon" badge stays pinned inside it. */
+    .preview-box { position: relative; top: auto; }
   }
   @media (max-width: 520px) {
     .cookies { grid-template-columns: 1fr; }
