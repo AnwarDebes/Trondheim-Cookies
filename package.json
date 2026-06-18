@@ -1,0 +1,10 @@
+{
+  "name": "batch-cookie-galaxy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Batch - an immersive 3D cookie storefront. A scroll-driven WebGL journey through the cookie galaxy.",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve ."
+  }
+}

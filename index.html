@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trondheim Cookies · Baked with meaning, delivered in Trondheim</title>
+<meta name="description" content="Handmade cookies baked in Norway and delivered across Trondheim. 10% of every cookie goes to children in need in Syria. Order or build your own." />
+<link rel="stylesheet" href="./styles.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" />
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  /* ---- Light, warm bakery theme (overrides the dark tokens) ---- */
+  :root {
+    --page: #FBF6EC;
+    --page-2: #F4E9D6;
+    --ink: #2A1A10;
+    --ink-soft: #5E4633;
+    --muted: #8A6E54;
+    --line: #E7D8C0;
+    --card: #FFFFFF;
+    --amber: #E0892F;
+    --amber-deep: #C06E1E;
+    --amber-soft: #FBEAD2;
+    --give: #C24A3D;        /* warm terracotta-red for the Syria/impact accent */
+    --give-soft: #FBE3DE;
+    --shadow-sm: 0 2px 8px rgba(78,44,24,0.07);
+    --shadow-md: 0 12px 30px -12px rgba(78,44,24,0.20);
+    --shadow-lg: 0 26px 60px -24px rgba(78,44,24,0.28);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--page); color: var(--ink);
+    font-family: var(--font-text, "Hanken Grotesk", system-ui, sans-serif);
+    font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased;
+  }
+  h1,h2,h3 { font-family: var(--font-display, "Bricolage Grotesque", sans-serif); margin: 0; line-height: 1.04; letter-spacing: -0.02em; }
+  p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 22px; }
+  .mono { font-family: var(--font-mono, "Space Mono", monospace); }
+  .eyebrow { font-family: var(--font-mono,"Space Mono",monospace); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber-deep); }
+
+  /* ---- Impact ribbon (first thing you see) ---- */
+  .ribbon { background: var(--give); color: #fff; text-align: center; padding: 9px 16px;
+    font-size: 0.86rem; letter-spacing: 0.01em; display: flex; align-items: center; justify-content: center; gap: 9px; }
+  .ribbon b { font-weight: 700; }
+  .ribbon i { width: 15px; height: 15px; }
+
+  /* ---- Header ---- */
+  header { position: sticky; top: 0; z-index: 40; background: rgba(251,246,236,0.86);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .brand { display: flex; align-items: center; gap: 11px; cursor: pointer; }
+  .brand .logo { width: 40px; height: 40px; border-radius: 50%; background: var(--amber); color: #fff;
+    display: grid; place-items: center; box-shadow: var(--shadow-sm); }
+  .brand .logo i { width: 22px; height: 22px; }
+  .brand .name { font-family: var(--font-display,sans-serif); font-weight: 800; font-size: 1.18rem; letter-spacing: -0.03em; line-height: 1; }
+  .brand .sub { font-family: var(--font-mono,monospace); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+  .nav-right { display: flex; align-items: center; gap: 18px; }
+  .nav-links { display: flex; gap: 26px; align-items: center; }
+  .nav-links a { font-size: 0.94rem; color: var(--ink-soft); font-weight: 500; cursor: pointer; }
+  .nav-links a:hover { color: var(--amber-deep); }
+
+  /* ---- Language switch ---- */
+  .lang-switch { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: #fff; box-shadow: var(--shadow-sm); }
+  .lang-switch button { border: none; background: transparent; font-family: var(--font-mono,monospace); font-size: 0.72rem;
+    letter-spacing: 0.08em; padding: 8px 12px; cursor: pointer; color: var(--muted); font-weight: 700; transition: background .15s ease, color .15s ease; }
+  .lang-switch button:hover { color: var(--amber-deep); }
+  .lang-switch button.on { background: var(--ink); color: #fff; }
+
+  .basket-btn { display: inline-flex; align-items: center; gap: 9px; height: 44px; padding: 0 18px; border-radius: 999px;
+    background: var(--ink); color: #fff; border: none; cursor: pointer; font-family: inherit; font-size: 0.9rem; font-weight: 600; }
+  .basket-btn:hover { background: #3c2716; }
+  .basket-btn i { width: 17px; height: 17px; }
+  .basket-btn .count { min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--amber);
+    color: #fff; display: inline-grid; place-items: center; font-size: 0.72rem; font-weight: 700; }
+
+  /* ---- Hero ---- */
+  .hero { padding: clamp(34px,6vw,66px) 0 clamp(26px,4vw,40px); }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(24px,4vw,56px); align-items: center; }
+  .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; }
+  .hero h1 .amber { color: var(--amber-deep); }
+  .hero .lead { font-size: clamp(1.05rem,1.6vw,1.22rem); color: var(--ink-soft); margin-top: 20px; max-width: 30em; }
+  .hero-cta { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 9px; height: 54px; padding: 0 26px; border-radius: 999px;
+    font-family: inherit; font-size: 1rem; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: transform .12s ease, background .2s ease, box-shadow .2s ease; }
+  .btn:active { transform: scale(.97); }
+  .btn i { width: 18px; height: 18px; }
+  .btn-primary { background: var(--amber); color: #fff; box-shadow: var(--shadow-md); }
+  .btn-primary:hover { background: var(--amber-deep); }
+  .btn-ghost { background: #fff; color: var(--ink); border-color: var(--line); box-shadow: var(--shadow-sm); }
+  .btn-ghost:hover { border-color: var(--amber); color: var(--amber-deep); }
+
+  /* impact card in hero */
+  .impact-card { background: #fff; border: 1px solid var(--line); border-radius: 26px; padding: 26px; box-shadow: var(--shadow-lg); position: relative; overflow: hidden; }
+  .impact-card .halo { position: absolute; inset: auto -40px -60px auto; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, var(--give-soft), transparent 70%); }
+  .impact-card .pct { font-family: var(--font-display,sans-serif); font-weight: 800; font-size: clamp(3.4rem,7vw,5rem); color: var(--give); line-height: 0.9; letter-spacing: -0.04em; }
+  .impact-card h3 { font-size: 1.4rem; margin-top: 6px; font-weight: 700; }
+  .impact-card p { color: var(--ink-soft); margin-top: 10px; font-size: 0.98rem; }
+  .impact-card .pill { display: inline-flex; align-items: center; gap: 7px; margin-top: 18px; background: var(--give-soft); color: var(--give);
+    padding: 7px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; }
+  .impact-card .pill i { width: 14px; height: 14px; }
+
+  /* trust strip */
+  .trust { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .trust .t { display: inline-flex; align-items: center; gap: 9px; color: var(--ink-soft); font-size: 0.9rem; font-weight: 500; }
+  .trust .t i { width: 17px; height: 17px; color: var(--amber-deep); }
+
+  /* ---- Section heads ---- */
+  .section { padding: clamp(46px,7vw,78px) 0; }
+  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-bottom: 30px; flex-wrap: wrap; }
+  .sec-head h2 { font-size: clamp(1.9rem,3.4vw,2.7rem); font-weight: 800; }
+  .sec-head p { color: var(--ink-soft); max-width: 30em; margin-top: 8px; }
+
+  /* ---- Cookie grid ---- */
+  .cookies { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .ccard { background: var(--card); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow-sm);
+    transition: transform .2s ease, box-shadow .2s ease; display: flex; flex-direction: column; }
+  .ccard:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+  .photo { position: relative; aspect-ratio: 1/1; background: linear-gradient(150deg, var(--page-2), #EAD9BD); display: grid; place-items: center; overflow: hidden; }
+  .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .photo .ph { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--muted); }
+  .photo .ph i { width: 40px; height: 40px; color: var(--amber); opacity: .8; }
+  .photo .ph span { font-family: var(--font-mono,monospace); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  .photo .no { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.9); color: var(--ink-soft);
+    font-family: var(--font-mono,monospace); font-size: 0.6rem; letter-spacing: 0.1em; padding: 5px 9px; border-radius: 999px; }
+  .photo .give-tag { position: absolute; top: 12px; right: 12px; background: var(--give); color: #fff;
+    font-size: 0.62rem; font-weight: 700; padding: 5px 9px; border-radius: 999px; letter-spacing: 0.04em; }
+  .cbody { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+  .cbody .cname { font-family: var(--font-display,sans-serif); font-weight: 700; font-size: 1.18rem; }
+  .cbody .cprice { color: var(--ink-soft); font-weight: 600; font-size: 0.98rem; white-space: nowrap; }
+  .cbody .cdesc { color: var(--muted); font-size: 0.84rem; line-height: 1.45; margin-top: -4px; }
+  .ctop { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .add-row { display: flex; align-items: center; gap: 10px; margin-top: auto; }
+  .stepper { display: inline-flex; align-items: center; gap: 0; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+  .stepper button { width: 38px; height: 40px; border: none; background: #fff; color: var(--ink); font-size: 1.1rem; cursor: pointer; }
+  .stepper button:hover { background: var(--amber-soft); color: var(--amber-deep); }
+  .stepper .q { min-width: 30px; text-align: center; font-weight: 700; font-family: var(--font-mono,monospace); }
+  .add-btn { flex: 1; height: 44px; border-radius: 999px; border: none; background: var(--amber); color: #fff; font-family: inherit;
+    font-weight: 600; font-size: 0.92rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+  .add-btn:hover { background: var(--amber-deep); }
+  .add-btn i { width: 16px; height: 16px; }
+
+  /* ---- Build your own ---- */
+  .build { background: var(--page-2); }
+  .build-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(24px,4vw,48px); align-items: start; }
+  .preview-box { background: #fff; border: 1px solid var(--line); border-radius: 26px; padding: 30px; box-shadow: var(--shadow-md); text-align: center; position: sticky; top: 92px; }
+  .bigcookie { width: min(62vw, 280px); aspect-ratio: 1/1; margin: 0 auto; border-radius: 50%;
+    background: radial-gradient(circle at 38% 34%, #E7B871, #C5854A 55%, #8A5A30 92%); box-shadow: inset 0 -14px 30px rgba(0,0,0,.22), inset 0 10px 22px rgba(255,235,200,.4), var(--shadow-md); transition: background .35s ease; position: relative; }
+  .bigcookie .specks { position: absolute; inset: 0; border-radius: 50%; }
+  .preview-box .myname { font-family: var(--font-display,sans-serif); font-weight: 700; font-size: 1.3rem; margin-top: 20px; }
+  .preview-box .myrecipe { color: var(--muted); font-size: 0.86rem; margin-top: 6px; min-height: 2.4em; }
+  .opt-group { margin-bottom: 22px; }
+  .opt-group h4 { font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-family: var(--font-mono,monospace); margin-bottom: 12px; font-weight: 400; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--line); background: #fff; cursor: pointer;
+    font-family: inherit; font-size: 0.9rem; font-weight: 500; color: var(--ink-soft); display: inline-flex; align-items: center; gap: 7px; transition: all .15s ease; }
+  .chip:hover { border-color: var(--amber); }
+  .chip.on { background: var(--amber); border-color: var(--amber); color: #fff; }
+  .chip .dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,.12); }
+  .build-name-input { width: 100%; height: 50px; border-radius: 14px; border: 1.5px solid var(--line); background: #fff;
+    padding: 0 16px; font-family: inherit; font-size: 1rem; color: var(--ink); margin-bottom: 16px; }
+  .build-name-input:focus { outline: none; border-color: var(--amber); }
+
+  /* 3D cookie preview */
+  .cookie3d { width: 100%; height: 300px; margin: 0 auto; cursor: grab; touch-action: none; }
+  .cookie3d:active { cursor: grabbing; }
+  .cookie3d canvas { display: block; margin: 0 auto; }
+  .spin-hint { font-family: var(--font-mono,monospace); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+  /* reference upload */
+  .upload-zone { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;
+    border: 1.5px dashed var(--line); border-radius: 16px; padding: 22px 18px; cursor: pointer; background: #fff; transition: border-color .15s ease, background .15s ease; }
+  .upload-zone:hover { border-color: var(--amber); background: var(--amber-soft); }
+  .upload-zone i { width: 26px; height: 26px; color: var(--amber-deep); }
+  .upload-zone .up-cta { font-weight: 700; font-size: 0.95rem; color: var(--ink); }
+  .upload-zone .up-hint { font-size: 0.8rem; color: var(--muted); max-width: 32em; }
+  .ref-preview { display: none; position: relative; margin-top: 12px; }
+  .ref-preview.on { display: block; }
+  .ref-preview img, .ref-preview video { width: 100%; max-height: 240px; object-fit: cover; border-radius: 14px; display: block; }
+  .ref-preview .ref-name { position: absolute; left: 10px; bottom: 10px; background: rgba(42,26,16,0.82); color: #fff;
+    font-size: 0.72rem; padding: 4px 9px; border-radius: 999px; max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ref-preview .ref-remove { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%;
+    border: none; background: rgba(42,26,16,0.82); color: #fff; cursor: pointer; display: grid; place-items: center; }
+  .ref-preview .ref-remove i { width: 15px; height: 15px; }
+  .ref-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 0.72rem; color: var(--amber-deep); font-weight: 600; margin-top: 2px; }
+  .ref-tag i { width: 12px; height: 12px; }
+  .bitem .bthumb video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+  /* ---- Order ---- */
+  .order-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(22px,3vw,40px); align-items: start; }
+  .panel { background: #fff; border: 1px solid var(--line); border-radius: 24px; padding: 26px; box-shadow: var(--shadow-sm); }
+  .panel h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; }
+  .panel .hint { color: var(--muted); font-size: 0.9rem; margin-bottom: 18px; }
+  .basket-list { display: flex; flex-direction: column; }
+  .bitem { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .bitem:first-child { padding-top: 0; }
+  .bitem .bthumb { width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0; background: var(--page-2); display: grid; place-items: center; overflow: hidden; position: relative; }
+  .bitem .bthumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .bitem .bthumb i { width: 22px; height: 22px; color: var(--amber); }
+  .bitem .binfo { flex: 1; min-width: 0; }
+  .bitem .binfo .bn { font-weight: 700; font-size: 0.98rem; }
+  .bitem .binfo .br { font-size: 0.78rem; color: var(--muted); }
+  .bitem .binfo .bp { font-size: 0.82rem; color: var(--ink-soft); }
+  .empty { text-align: center; color: var(--muted); padding: 30px 10px; }
+  .empty i { width: 30px; height: 30px; color: var(--line); }
+  .totals { margin-top: 18px; padding-top: 16px; border-top: 2px solid var(--ink); }
+  .totals .row { display: flex; justify-content: space-between; margin-bottom: 7px; font-size: 0.96rem; }
+  .totals .row.big { font-size: 1.3rem; font-weight: 800; font-family: var(--font-display,sans-serif); }
+  .totals .give-row { color: var(--give); font-weight: 600; display: flex; align-items: center; gap: 7px; }
+  .totals .give-row i { width: 15px; height: 15px; }
+
+  .field { margin-bottom: 15px; }
+  .field label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--ink-soft); margin-bottom: 6px; letter-spacing: 0.01em; }
+  .field input, .field textarea { width: 100%; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; padding: 13px 15px;
+    font-family: inherit; font-size: 0.98rem; color: var(--ink); }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--amber); }
+  .field textarea { min-height: 78px; resize: vertical; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .deliver-note { display: flex; align-items: flex-start; gap: 10px; background: var(--amber-soft); border-radius: 14px; padding: 13px 15px; margin-bottom: 18px; font-size: 0.86rem; color: var(--ink-soft); }
+  .deliver-note i { width: 18px; height: 18px; color: var(--amber-deep); flex-shrink: 0; margin-top: 1px; }
+  .guarantee-note { display:flex; align-items:flex-start; gap:10px; background:var(--give-soft); color:var(--give); border-radius:14px; padding:13px 15px; margin-bottom:18px; font-size:0.88rem; font-weight:600; }
+  .guarantee-note i { width:18px; height:18px; flex-shrink:0; margin-top:1px; }
+  .reviews-formonly .rev-reassure { display:flex; align-items:center; gap:9px; margin-bottom:18px; color:var(--give); font-weight:600; font-size:0.92rem; }
+  .reviews-formonly .rev-reassure i { width:18px; height:18px; }
+  .submit-btn { width: 100%; height: 56px; border-radius: 14px; border: none; background: var(--amber); color: #fff;
+    font-family: inherit; font-weight: 700; font-size: 1.05rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 9px; box-shadow: var(--shadow-md); }
+  .submit-btn:hover { background: var(--amber-deep); }
+  .submit-btn:disabled { background: #D8C4AC; cursor: not-allowed; box-shadow: none; }
+  .submit-btn i { width: 19px; height: 19px; }
+  .form-foot { text-align: center; font-size: 0.78rem; color: var(--muted); margin-top: 12px; }
+
+  /* ---- Impact / story band ---- */
+  .story { background: var(--give); color: #fff; }
+  .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px,5vw,60px); align-items: center; }
+  .story h2 { font-size: clamp(2rem,4vw,3rem); font-weight: 800; }
+  .story p { margin-top: 18px; font-size: 1.06rem; opacity: 0.94; max-width: 32em; }
+  .story .stats { display: flex; gap: 30px; margin-top: 28px; flex-wrap: wrap; }
+  .story .stat .n { font-family: var(--font-display,sans-serif); font-weight: 800; font-size: 2.6rem; line-height: 1; }
+  .story .stat .l { font-size: 0.84rem; opacity: 0.85; margin-top: 6px; }
+  .story-card { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 26px; padding: 34px; backdrop-filter: blur(4px); }
+  .story-card .q { font-family: var(--font-display,sans-serif); font-size: 1.5rem; font-weight: 600; line-height: 1.3; }
+  .story-card .by { margin-top: 16px; font-size: 0.9rem; opacity: 0.85; font-family: var(--font-mono,monospace); letter-spacing: 0.05em; }
+
+  /* ---- Footer ---- */
+  footer { background: var(--ink); color: #E9D9C5; padding: 50px 0 34px; }
+  .foot-grid { display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+  footer .brand .name { color: #fff; }
+  footer .brand .sub { color: #B79B7E; }
+  .foot-col h5 { font-family: var(--font-mono,monospace); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: #B79B7E; margin: 0 0 14px; font-weight: 400; }
+  .foot-col a, .foot-col p { display: block; color: #E9D9C5; font-size: 0.92rem; margin-bottom: 9px; cursor: pointer; }
+  .foot-col a:hover { color: var(--amber); }
+  .foot-bar { display: flex; justify-content: space-between; margin-top: 38px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.12);
+    font-family: var(--font-mono,monospace); font-size: 0.7rem; color: #B79B7E; letter-spacing: 0.06em; flex-wrap: wrap; gap: 8px; }
+
+  /* ---- Toast ---- */
+  .toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px); z-index: 80;
+    background: var(--ink); color: #fff; padding: 13px 20px; border-radius: 999px; font-size: 0.92rem; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 9px; box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; transition: all .3s ease; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast i { width: 17px; height: 17px; color: var(--amber); }
+
+  /* ---- Success overlay ---- */
+  .success { position: fixed; inset: 0; z-index: 90; background: rgba(42,26,16,0.5); backdrop-filter: blur(5px);
+    display: none; place-items: center; padding: 20px; }
+  .success.show { display: grid; }
+  .success .box { background: #fff; border-radius: 26px; padding: 40px 34px; max-width: 460px; text-align: center; box-shadow: var(--shadow-lg); }
+  .success .ok { width: 64px; height: 64px; border-radius: 50%; background: var(--amber-soft); color: var(--amber-deep); display: grid; place-items: center; margin: 0 auto 20px; }
+  .success .ok i { width: 32px; height: 32px; }
+  .success h3 { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; }
+  .success p { color: var(--ink-soft); margin-bottom: 8px; }
+  .success .btn { margin-top: 18px; }
+
+  /* ---- cookie meta row (weight + stuffed) ---- */
+  .cbody .cmeta { display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center; }
+  .cstuffed { font-family:var(--font-mono,monospace); font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase; display:inline-flex; align-items:center; gap:6px; }
+  .cstuffed i { width:13px; height:13px; }
+  .cstuffed.is-stuffed { color:var(--amber-deep); }
+  .cstuffed.is-plain { color:var(--muted); }
+
+  /* ---- deal pill + basket nudge + free row ---- */
+  .deal-pill { display:inline-flex; align-items:center; gap:8px; margin-bottom:24px; background:var(--give-soft); color:var(--give); border-radius:999px; padding:9px 17px; font-weight:700; font-size:0.88rem; }
+  .deal-pill i { width:16px; height:16px; }
+  .row.free-row { color:var(--give); font-weight:600; display:flex; align-items:center; justify-content:space-between; }
+  .row.free-row > span:first-child { display:inline-flex; align-items:center; gap:7px; }
+  .row.free-row i { width:15px; height:15px; }
+  .deal-nudge { display:flex; align-items:center; gap:8px; margin-top:14px; background:var(--amber-soft); color:var(--amber-deep); border-radius:12px; padding:10px 14px; font-size:0.86rem; font-weight:600; }
+
+  /* ---- video showcase ---- */
+  .film-card { display:grid; grid-template-columns:1.05fr 0.95fr; gap:clamp(20px,4vw,44px); align-items:center; background:#fff; border:1px solid var(--line); border-radius:28px; padding:clamp(14px,2vw,22px); box-shadow:var(--shadow-md); }
+  .film-card video { width:100%; border-radius:20px; display:block; aspect-ratio:4/5; object-fit:cover; background:var(--page-2); }
+  .film-copy { padding:clamp(8px,2vw,24px); }
+  .film-copy h2 { font-size:clamp(1.8rem,3vw,2.6rem); font-weight:800; margin-top:10px; }
+  .film-copy p { color:var(--ink-soft); margin-top:14px; font-size:1.05rem; }
+  @media (max-width:860px){ .film-card{ grid-template-columns:1fr; } .film-card video{ aspect-ratio:1/1; } }
+
+  /* ---- build-your-own: coming soon ---- */
+  .build-soon { display:grid; grid-template-columns:0.9fr 1.1fr; gap:clamp(24px,4vw,48px); align-items:center; }
+  .build-soon .preview-box { position:relative; }
+  .soon-badge { position:absolute; top:16px; right:16px; z-index:2; background:var(--ink); color:#fff; font-family:var(--font-mono,monospace);
+    font-size:0.64rem; letter-spacing:0.14em; text-transform:uppercase; padding:7px 13px; border-radius:999px; }
+  .soon-copy h3 { font-size:clamp(1.7rem,3vw,2.4rem); font-weight:800; margin-top:10px; }
+  .soon-copy p { color:var(--ink-soft); font-size:1.05rem; margin-top:14px; max-width:30em; }
+  .soon-copy .btn { margin-top:24px; }
+
+  /* ---- event planning form ---- */
+  .event-form { margin-top:26px; max-width:760px; }
+  .ev-select { width:100%; height:48px; border-radius:12px; border:1.5px solid var(--line); background:#fff; padding:0 14px;
+    font-family:inherit; font-size:0.98rem; color:var(--ink); appearance:none; cursor:pointer; }
+  .ev-select:focus { outline:none; border-color:var(--amber); }
+
+  /* ---- reviews: form only ---- */
+  .reviews-formonly { display:block; max-width:620px; }
+  .reviews-formonly .review-form { position:static; }
+
+  /* ---- brand stack fix (name above subtitle) ---- */
+  .brand .name, .brand .sub { display: block; }
+
+  /* ---- weight spec on cards ---- */
+  .cbody .cspec { font-family: var(--font-mono,monospace); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
+  .cbody .cspec i { width: 13px; height: 13px; }
+
+  /* ---- Events ---- */
+  .events { background: var(--page-2); }
+  .event-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+  .event-card { background:#fff; border:1px solid var(--line); border-radius:22px; padding:26px; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:10px; transition: transform .2s ease, box-shadow .2s ease; }
+  .event-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+  .event-card .ico { width:50px; height:50px; border-radius:14px; background:var(--amber-soft); color:var(--amber-deep); display:grid; place-items:center; }
+  .event-card .ico i { width:24px; height:24px; }
+  .event-card h3 { font-size:1.25rem; font-weight:800; }
+  .event-card p { color:var(--ink-soft); font-size:0.95rem; }
+  .event-card .ev-from { margin-top:auto; padding-top:6px; font-family:var(--font-mono,monospace); font-size:0.72rem; letter-spacing:0.08em; color:var(--amber-deep); font-weight:700; text-transform:uppercase; }
+  .event-cta { margin-top:26px; background:var(--ink); color:#fff; border-radius:24px; padding:30px 34px; display:flex; align-items:center; justify-content:space-between; gap:22px; flex-wrap:wrap; box-shadow:var(--shadow-md); }
+  .event-cta .ec-text { font-family:var(--font-display,sans-serif); font-size:1.4rem; font-weight:700; max-width:22em; line-height:1.2; }
+  .event-cta .btn { background: var(--amber); color:#fff; height:54px; }
+  .event-cta .btn:hover { background: var(--amber-deep); }
+
+  /* ---- Reviews ---- */
+  .reviews-wrap { display:grid; grid-template-columns: 1.25fr 0.75fr; gap: clamp(22px,3vw,40px); align-items:start; }
+  .review-list { display:grid; grid-template-columns: 1fr 1fr; gap:18px; align-content:start; }
+  .review-card { background:#fff; border:1px solid var(--line); border-radius:20px; padding:22px; box-shadow:var(--shadow-sm); }
+  .review-card .stars { display:flex; gap:3px; color:var(--amber); margin-bottom:10px; }
+  .review-card .stars i { width:16px; height:16px; fill:currentColor; }
+  .review-card .rtext { color:var(--ink-soft); font-size:0.96rem; line-height:1.5; }
+  .review-card .rby { margin-top:12px; font-weight:700; font-size:0.92rem; }
+  .review-form { background:#fff; border:1px solid var(--line); border-radius:22px; padding:26px; box-shadow:var(--shadow-sm); position:sticky; top:92px; }
+  .review-form h3 { font-size:1.25rem; font-weight:700; margin-bottom:14px; }
+  .star-input { display:flex; gap:5px; }
+  .star-input button { background:none; border:none; cursor:pointer; padding:2px; color:var(--line); line-height:0; }
+  .star-input button i { width:28px; height:28px; }
+  .star-input button.on { color:var(--amber); }
+  .star-input button.on i { fill: currentColor; }
+
+  /* ---- RTL (Arabic) ---- */
+  [dir="rtl"] body, [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] .brand .name { font-family: "Cairo", "Hanken Grotesk", system-ui, sans-serif; }
+  [dir="rtl"] .eyebrow, [dir="rtl"] .opt-group h4, [dir="rtl"] .foot-col h5, [dir="rtl"] .spin-hint, [dir="rtl"] .cbody .cspec, [dir="rtl"] .brand .sub, [dir="rtl"] .foot-bar, [dir="rtl"] .event-card .ev-from, [dir="rtl"] .photo .no, [dir="rtl"] .give-tag { letter-spacing: 0 !important; text-transform: none !important; font-family: "Cairo", sans-serif !important; }
+
+  @media (max-width: 860px) {
+    .event-grid { grid-template-columns: 1fr; }
+    .reviews-wrap { grid-template-columns: 1fr; }
+    .review-form { position: static; }
+    .build-soon { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 860px) {
+    .hero-grid, .build-grid, .order-grid, .story-grid { grid-template-columns: 1fr; }
+    .cookies { grid-template-columns: repeat(2, 1fr); }
+    .nav-links { display: none; }
+    .preview-box { position: static; }
+  }
+  @media (max-width: 520px) {
+    .cookies { grid-template-columns: 1fr; }
+    .two { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Impact ribbon, first thing seen -->
+<div class="ribbon">
+  <i data-lucide="heart"></i>
+  <span data-i18n-html="ribbon"><b>10%</b> of every cookie goes to children in need in Syria. Buy with meaning.</span>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="wrap nav">
+    <div class="brand" onclick="scrollToId('top')">
+      <span class="logo"><i data-lucide="cookie"></i></span>
+      <span>
+        <span class="name">Trondheim Cookies</span>
+        <span class="sub" data-i18n="brandSub">Made in Norway</span>
+      </span>
+    </div>
+    <nav class="nav-links">
+      <a onclick="scrollToId('cookies')" data-i18n="navCookies">Our cookies</a>
+      <a onclick="scrollToId('build')" data-i18n="navBuild">Build your own</a>
+      <a onclick="scrollToId('events')" data-i18n="navEvents">Events</a>
+      <a onclick="scrollToId('reviews')" data-i18n="navReviews">Reviews</a>
+      <a onclick="scrollToId('order')" data-i18n="navOrder">Order</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="no">NO</button>
+        <button type="button" data-lang="ar">AR</button>
+      </div>
+      <button class="basket-btn" onclick="scrollToId('order')">
+        <i data-lucide="shopping-bag"></i> <span data-i18n="basket">Basket</span> <span class="count" id="navCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow" data-i18n="heroEyebrow">Handmade in Norway · Delivered in Trondheim</div>
+      <h1 style="margin-top:16px" data-i18n-html="heroTitle">Trendy stuffed cookies<br>baked with <span class="amber">meaning.</span></h1>
+      <p class="lead" data-i18n-html="heroLead">Fresh, handmade cookies delivered to your door across Trondheim. And with every single cookie, <b>10% goes to children in need in Syria</b>. Sweet that does good.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" onclick="scrollToId('cookies')"><i data-lucide="cookie"></i> <span data-i18n="heroCta1">Order cookies</span></button>
+        <button class="btn btn-ghost" onclick="scrollToId('build')"><i data-lucide="sparkles"></i> <span data-i18n="heroCta2">Build your own</span></button>
+      </div>
+      <div class="trust">
+        <span class="t"><i data-lucide="truck"></i> <span data-i18n="trust1">Free delivery in Trondheim</span></span>
+        <span class="t"><i data-lucide="hand-heart"></i> <span data-i18n="trust2">10% to Syria</span></span>
+        <span class="t"><i data-lucide="croissant"></i> <span data-i18n="trust3">Baked fresh to order</span></span>
+      </div>
+    </div>
+    <div class="impact-card">
+      <div class="halo"></div>
+      <div class="eyebrow" style="color:var(--give)" data-i18n="impactEyebrow">Buy with meaning</div>
+      <div class="pct">10%</div>
+      <h3 data-i18n="impactTitle">of every cookie feeds children in need in Syria</h3>
+      <p data-i18n="impactBody">You order cookies you love. A tenth of what you pay goes straight to helping kids in need in Syria. No catch, just kindness baked in.</p>
+      <span class="pill"><i data-lucide="heart"></i> <span data-i18n="impactPill">Every order makes a difference</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- Our cookies -->
+<section class="section" id="cookies">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow" data-i18n="cookiesEyebrow">Our cookies</div>
+        <h2 style="margin-top:10px" data-i18n="cookiesTitle">Nine to choose from</h2>
+        <p data-i18n="cookiesBody">Pick your favourites, choose how many, and we'll bake and deliver them fresh across Trondheim.</p>
+      </div>
+    </div>
+    <div class="deal-pill"><i data-lucide="gift"></i> <span data-i18n="dealBanner">Buy 5, get 1 free · Buy 9, get 2 free</span></div>
+    <div class="cookies" id="cookieGrid"></div>
+  </div>
+</section>
+
+<!-- Video showcase -->
+<section class="section film" id="film">
+  <div class="wrap">
+    <div class="film-card">
+      <video src="cookie-video.mp4" autoplay muted loop playsinline controls preload="metadata"></video>
+      <div class="film-copy">
+        <div class="eyebrow" data-i18n="filmEyebrow">Straight from the oven</div>
+        <h2 data-i18n="filmTitle">See them in action</h2>
+        <p data-i18n="filmBody">Gooey, stuffed and pulled apart on camera. This is exactly what lands at your door.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Events / bigger happenings -->
+<section class="section events" id="events">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow" data-i18n="eventsEyebrow">Bigger happenings</div>
+        <h2 style="margin-top:10px" data-i18n="eventsTitle">Birthdays, parties, big days, sorted.</h2>
+        <p data-i18n="eventsBody">From birthday boxes to full party platters, we bake show-stopping cookie spreads for any celebration. Tell us the vibe and we'll make it unforgettable.</p>
+      </div>
+    </div>
+    <div class="event-grid">
+      <article class="event-card">
+        <div class="ico"><i data-lucide="cake"></i></div>
+        <h3 data-i18n="ev1Title">Birthday boxes</h3>
+        <p data-i18n="ev1Body">A gift-ready box of stuffed cookies, customised with names, candles and your colours.</p>
+      </article>
+      <article class="event-card">
+        <div class="ico"><i data-lucide="party-popper"></i></div>
+        <h3 data-i18n="ev2Title">Party platters</h3>
+        <p data-i18n="ev2Body">Big sharing platters and cookie towers that turn heads at any party or gathering.</p>
+      </article>
+      <article class="event-card">
+        <div class="ico"><i data-lucide="gift"></i></div>
+        <h3 data-i18n="ev3Title">Custom &amp; catering</h3>
+        <p data-i18n="ev3Body">Weddings, corporate gifts, brand launches, themed bakes. If you can dream it, we can bake it.</p>
+      </article>
+    </div>
+    <div class="event-cta">
+      <div class="ec-text" data-i18n="eventsCtaText">The most important thing for us is your satisfaction.</div>
+      <button class="btn" onclick="scrollToId('eventForm')"><i data-lucide="party-popper"></i> <span data-i18n="eventsCtaBtn">Plan my event</span></button>
+    </div>
+    <div class="panel event-form" id="eventForm">
+      <h3 data-i18n="evFormTitle">Let's plan it together</h3>
+      <p class="hint" data-i18n="evFormHint">Tell us a little about your event and we'll come back with ideas and a quote. No commitment, just a chat.</p>
+      <form onsubmit="return eventSubmit(event)">
+        <div class="two">
+          <div class="field"><label data-i18n="evOccasion">Occasion</label>
+            <select id="evType" class="ev-select">
+              <option data-i18n="evOpt1">Birthday</option>
+              <option data-i18n="evOpt2">Party / gathering</option>
+              <option data-i18n="evOpt3">Wedding</option>
+              <option data-i18n="evOpt4">Corporate / brand</option>
+              <option data-i18n="evOpt5">Something else</option>
+            </select>
+          </div>
+          <div class="field"><label data-i18n="evDate">Date</label><input id="evDate" type="date" /></div>
+        </div>
+        <div class="two">
+          <div class="field"><label data-i18n="evGuests">Roughly how many guests?</label><input id="evGuests" type="number" min="1" data-i18n-ph="evGuestsPh" placeholder="e.g. 20" /></div>
+          <div class="field"><label data-i18n="evName">Your name</label><input id="evName" required data-i18n-ph="phName" placeholder="Full name" /></div>
+        </div>
+        <div class="field"><label data-i18n="evPhone">Phone</label><input id="evPhone" required placeholder="+47 …" /></div>
+        <div class="field"><label data-i18n="evIdeas">Your ideas &amp; the vibe</label><textarea id="evIdeas" data-i18n-ph="evIdeasPh" placeholder="Theme, flavours, colours, anything you're dreaming of…"></textarea></div>
+        <button type="submit" class="submit-btn"><i data-lucide="send"></i> <span data-i18n="evFormSubmit">Send my enquiry</span></button>
+        <p class="form-foot" data-i18n="evFormFoot">This opens your email app with the details, ready to send to us.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Build your own -->
+<section class="section build" id="build">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow" data-i18n="buildEyebrow">Make it yours</div>
+        <h2 style="margin-top:10px" data-i18n="buildTitle">Build your own cookie</h2>
+        <p data-i18n="buildBody">Choose a dough, add your favourite mix-ins, give it a name, and we'll bake your creation just for you.</p>
+      </div>
+    </div>
+    <div class="build-soon">
+      <div class="preview-box">
+        <span class="soon-badge" data-i18n="soonBadge">Coming soon</span>
+        <div class="cookie3d" id="cookie3d"></div>
+        <div class="spin-hint" data-i18n="spinHint">Drag to spin · pinch or scroll won't bite</div>
+      </div>
+      <div class="soon-copy">
+        <div class="eyebrow" data-i18n="soonTag">In the oven</div>
+        <h3 data-i18n="soonTitle">Build-your-own is coming soon</h3>
+        <p data-i18n="soonBody">Soon you'll design your very own cookie, choose the dough, pile on the mix-ins, and name it. We're putting the finishing touches on it. Give our 3D cookie a spin and check back soon, it's nearly out of the oven.</p>
+        <button class="btn btn-primary" onclick="scrollToId('cookies')"><i data-lucide="cookie"></i> <span data-i18n="soonCta">Shop our cookies meanwhile</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Order -->
+<section class="section" id="order">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow" data-i18n="orderEyebrow">Almost there</div>
+        <h2 style="margin-top:10px" data-i18n="orderTitle">Place your order</h2>
+        <p data-i18n="orderBody">No payment online. You pay on delivery. Tell us where you are in Trondheim and we'll bring them to you.</p>
+      </div>
+    </div>
+    <div class="order-grid">
+      <!-- Basket -->
+      <div class="panel">
+        <h3 data-i18n="basketTitle">Your basket</h3>
+        <p class="hint" data-i18n="basketHint">Cookies are 59 kr each · 150–200 g.</p>
+        <div class="basket-list" id="basketList"></div>
+        <div class="deal-nudge" id="dealNudge" style="display:none"></div>
+        <div class="totals" id="totals" style="display:none">
+          <div class="row"><span id="countLine">0 cookies</span><span id="subtotal">0 kr</span></div>
+          <div class="row free-row" id="freeRow" style="display:none"><span><i data-lucide="gift"></i> <span id="freeLabel">Free cookies</span></span><span id="freeAmt">0 kr</span></div>
+          <div class="row give-row"><span><i data-lucide="heart"></i> <span data-i18n="giveLine">Goes to children in need in Syria</span></span><span id="giveAmt">0 kr</span></div>
+          <div class="row big"><span data-i18n="totalLine">Total</span><span id="grandTotal">0 kr</span></div>
+        </div>
+      </div>
+      <!-- Delivery form -->
+      <div class="panel">
+        <h3 data-i18n="deliveryTitle">Delivery details</h3>
+        <p class="hint" data-i18n="deliveryHint">We deliver across the Trondheim area.</p>
+        <div class="deliver-note">
+          <i data-lucide="map-pin"></i>
+          <span data-i18n-html="deliveryNote">We currently deliver only within <b>Trondheim, Norway</b>. Pay with Vipps or cash when we hand over your cookies.</span>
+        </div>
+        <form id="orderForm" onsubmit="return submitOrder(event)">
+          <div class="two">
+            <div class="field"><label data-i18n="fldName">Your name</label><input id="fName" required data-i18n-ph="phName" placeholder="Full name" /></div>
+            <div class="field"><label data-i18n="fldEmail">Your email</label><input id="fEmail" type="email" required data-i18n-ph="phEmail" placeholder="you@email.com" /></div>
+          </div>
+          <div class="field"><label data-i18n="fldAddress">Delivery address (Trondheim)</label><input id="fAddress" required data-i18n-ph="phAddress" placeholder="Street, number, postcode" /></div>
+          <div class="two">
+            <div class="field"><label data-i18n="fldArea">Area / neighbourhood</label><input id="fArea" data-i18n-ph="phArea" placeholder="e.g. Midtbyen, Lade…" /></div>
+            <div class="field"><label data-i18n="fldWhen">Preferred day/time</label><input id="fWhen" data-i18n-ph="phWhen" placeholder="e.g. Sat afternoon" /></div>
+          </div>
+          <div class="field"><label data-i18n="fldNotes">Notes (optional)</label><textarea id="fNotes" data-i18n-ph="phNotes" placeholder="Allergies, doorbell, gift message…"></textarea></div>
+          <button type="submit" class="submit-btn" id="submitBtn"><i data-lucide="send"></i> <span data-i18n="submitBtn">Send my order</span></button>
+          <p class="form-foot" data-i18n="formFoot">Your order opens in your email app, ready to send to our bakery.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reviews -->
+<section class="section reviews" id="reviews">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow" data-i18n="reviewsEyebrow">Loved in Trondheim</div>
+        <h2 style="margin-top:10px" data-i18n="reviewsTitle">What people are saying</h2>
+        <p data-i18n="reviewsBody">Real words from real cookie lovers. Tried one? Leave yours below.</p>
+      </div>
+    </div>
+    <div class="reviews-wrap reviews-formonly">
+      <form class="review-form" id="reviewForm" onsubmit="return submitReview(event)">
+        <h3 data-i18n="reviewFormTitle">Share your review</h3>
+        <div class="field"><label data-i18n="revName">Your name</label><input id="rvName" maxlength="40" required data-i18n-ph="revNamePh" placeholder="Your name" /></div>
+        <div class="field"><label data-i18n="revRating">Your rating</label><div class="star-input" id="starInput"></div></div>
+        <div class="field"><label data-i18n="revText">Your review</label><textarea id="rvText" maxlength="240" required data-i18n-ph="revTextPh" placeholder="How was your cookie?"></textarea></div>
+        <button type="submit" class="submit-btn"><i data-lucide="send"></i> <span data-i18n="revSubmit">Post review</span></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="brand">
+        <span class="logo"><i data-lucide="cookie"></i></span>
+        <span><span class="name">Trondheim Cookies</span><span class="sub" data-i18n="brandSub">Made in Norway</span></span>
+      </div>
+      <div class="foot-col">
+        <h5 data-i18n="footOrder">Order</h5>
+        <a onclick="scrollToId('cookies')" data-i18n="navCookies">Our cookies</a>
+        <a onclick="scrollToId('build')" data-i18n="navBuild">Build your own</a>
+        <a onclick="scrollToId('order')" data-i18n="footPlace">Place an order</a>
+      </div>
+      <div class="foot-col">
+        <h5 data-i18n="footDelivery">Delivery</h5>
+        <p data-i18n="footDel1">Trondheim area only</p>
+        <p data-i18n="footDel2">Pay on delivery</p>
+        <p data-i18n="footDel3">Vipps or cash</p>
+      </div>
+      <div class="foot-col">
+        <h5 data-i18n="navPromise">Our promise</h5>
+        <p data-i18n="footProm1">10% to children in need in Syria</p>
+        <p data-i18n="footProm2">Handmade, baked to order</p>
+        <p data-i18n="footProm3">Satisfaction guaranteed</p>
+      </div>
+    </div>
+    <div class="foot-bar">
+      <span data-i18n="footCopy">© 2026 TRONDHEIM COOKIES · MADE IN NORWAY</span>
+      <span data-i18n="footTag">BUY WITH MEANING ♥</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"><i data-lucide="check"></i> <span id="toastMsg">Added to basket</span></div>
+
+<div class="success" id="success">
+  <div class="box">
+    <div class="ok"><i data-lucide="check"></i></div>
+    <h3 data-i18n="successTitle">Order ready to send!</h3>
+    <p data-i18n-html="successBody">Your order just opened in your email app. Press <b>send</b> and we'll get baking.</p>
+    <p style="color:var(--give);font-weight:600" data-i18n="successThanks">Thank you for helping children in need in Syria. ♥</p>
+    <button class="btn btn-primary" onclick="closeSuccess()" style="margin:18px auto 0"><i data-lucide="cookie"></i> <span data-i18n="successBack">Back to cookies</span></button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
