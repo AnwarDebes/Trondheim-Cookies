@@ -358,17 +358,22 @@
   .star-input button.on i { fill: currentColor; }
 
   /* ---- Break / farewell notice ---- */
-  .farewell { padding: clamp(28px,4vw,52px) 0 0; }
-  .farewell-card { position:relative; max-width:760px; margin:0 auto; background:#fff; border:1px solid var(--line);
-    border-radius:26px; padding:clamp(26px,4vw,46px); box-shadow:var(--shadow-md); text-align:center; }
-  .farewell-badge { width:54px; height:54px; border-radius:50%; background:var(--give-soft); color:var(--give);
+  .farewell { padding: clamp(40px,6vw,72px) 0; }
+  .farewell-card { position:relative; overflow:hidden; max-width:760px; margin:0 auto; background:#fff;
+    border:1px solid var(--line); border-radius:26px; padding:clamp(28px,5vw,48px); box-shadow:var(--shadow-lg); text-align:center; }
+  .farewell-card .halo { position:absolute; inset:auto -50px -70px auto; width:240px; height:240px; border-radius:50%;
+    background:radial-gradient(circle, var(--give-soft), transparent 70%); z-index:0; pointer-events:none; }
+  .farewell-card .farewell-badge, .farewell-card h2, .farewell-card .farewell-sub,
+  .farewell-card .farewell-body, .farewell-card .farewell-sign { position:relative; z-index:1; }
+  .farewell-badge { width:56px; height:56px; border-radius:50%; background:var(--give-soft); color:var(--give);
     display:grid; place-items:center; margin:0 auto 18px; }
-  .farewell-badge i { width:26px; height:26px; }
-  .farewell-eyebrow { color:var(--give); font-weight:700; font-size:0.98rem; margin-bottom:12px; }
-  .farewell-card h2 { font-size:clamp(1.7rem,3.4vw,2.6rem); font-weight:800; color:var(--ink); }
-  .farewell-body { margin-top:18px; display:flex; flex-direction:column; gap:14px; color:var(--ink-soft); font-size:1.05rem; line-height:1.6; }
+  .farewell-badge i { width:28px; height:28px; }
+  .farewell-card h2 { font-size:clamp(1.6rem,5vw,2.6rem); font-weight:800; color:var(--ink); line-height:1.12; }
+  .farewell-sub { color:var(--give); font-weight:700; font-size:1.02rem; margin-top:12px; }
+  .farewell-body { margin-top:18px; display:flex; flex-direction:column; gap:14px; color:var(--ink-soft);
+    font-size:clamp(1rem,2.6vw,1.08rem); line-height:1.65; overflow-wrap:break-word; }
   .farewell-body p { margin:0; }
-  .farewell-sign { margin-top:22px; font-family:var(--font-display,sans-serif); font-weight:700; font-size:1.18rem; color:var(--give); }
+  .farewell-sign { margin-top:22px; font-family:var(--font-display,sans-serif); font-weight:800; font-size:1.2rem; color:var(--give); }
 
   /* ---- RTL (Arabic) ---- */
   [dir="rtl"] body, [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] .brand .name { font-family: "Cairo", "Hanken Grotesk", system-ui, sans-serif; }
@@ -431,24 +436,6 @@
     </div>
   </div>
 </header>
-
-<!-- Break / farewell notice -->
-<section class="section farewell" id="farewell">
-  <div class="wrap">
-    <div class="farewell-card">
-      <div class="farewell-badge"><i data-lucide="heart"></i></div>
-      <div class="farewell-eyebrow" data-i18n="farewellFirst">Thank you, Trondheim. This is not goodbye.</div>
-      <h2 data-i18n="farewellTitle">From the 4th of July, the oven is resting for a while. ♥</h2>
-      <div class="farewell-body" data-i18n-html="farewellBody">
-        <p>From the 4th of July we are taking a break. The oven will be resting for a while, but we truly hope to fire it up again and bake for you in the future.</p>
-        <p>This started as something small. We just wanted to make a little difference for children in need in Syria, and to put a warm, handmade cookie in your hands, simply because we love spreading a bit of kindness.</p>
-        <p>With every cookie you ordered, you helped us do exactly that. And that was always the whole point.</p>
-        <p>Thank you for tasting what we made, for sharing it with the people you love, and for helping children in Syria along the way. You made it real. If you have ordered from us before, we will be in touch when we are back.</p>
-      </div>
-      <div class="farewell-sign" data-i18n="farewellSign">With love, Trondheim Cookies ♥</div>
-    </div>
-  </div>
-</section>
 
 <!-- Hero -->
 <section class="hero" id="top">
@@ -667,6 +654,25 @@
   </div>
 </section>
 
+<!-- Break / farewell notice (end of page) -->
+<section class="section farewell" id="farewell">
+  <div class="wrap">
+    <div class="farewell-card">
+      <span class="halo" aria-hidden="true"></span>
+      <div class="farewell-badge"><i data-lucide="heart"></i></div>
+      <h2 data-i18n="farewellTitle">From the 4th of July, the oven is resting for a while. ♥</h2>
+      <div class="farewell-sub" data-i18n="farewellFirst">Thank you, Trondheim. This is not goodbye.</div>
+      <div class="farewell-body" data-i18n-html="farewellBody">
+        <p>From the 4th of July we are taking a break. The oven will be resting for a while, but we truly hope to fire it up again and bake for you in the future.</p>
+        <p>This started as something small. We just wanted to make a little difference for children in need in Syria, and to put a warm, handmade cookie in your hands, simply because we love spreading a bit of kindness.</p>
+        <p>With every cookie you ordered, you helped us do exactly that. And that was always the whole point.</p>
+        <p>Thank you for tasting what we made, for sharing it with the people you love, and for helping children in Syria along the way. You made it real. If you have ordered from us before, we will be in touch when we are back.</p>
+      </div>
+      <div class="farewell-sign" data-i18n="farewellSign">With love, Trondheim Cookies ♥</div>
+    </div>
+  </div>
+</section>
+
 <!-- Footer -->
 <footer>
   <div class="wrap">
@@ -714,6 +720,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="./app.js"></script>
+<script src="./app.js?v=2"></script>
 </body>
 </html>
