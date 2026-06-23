@@ -105,7 +105,11 @@ const mixLabel = (m) => m[LANG];
    ============================================================ */
 const I18N = {
   en: {
-    ribbon: "<b>10%</b> of every cookie goes to children in need in Syria. Buy with meaning.",
+    ribbon: "<b>From the 4th of July</b> we are taking a break. Thank you for every cookie, and for helping children in Syria. We hope to be back. ♥",
+    farewellFirst: "Thank you, Trondheim. This is not goodbye.",
+    farewellTitle: "From the 4th of July, the oven is resting for a while. ♥",
+    farewellBody: "<p>From the 4th of July we are taking a break. The oven will be resting for a while, but we truly hope to fire it up again and bake for you in the future.</p><p>This started as something small. We just wanted to make a little difference for children in need in Syria, and to put a warm, handmade cookie in your hands, simply because we love spreading a bit of kindness.</p><p>With every cookie you ordered, you helped us do exactly that. And that was always the whole point.</p><p>Thank you for tasting what we made, for sharing it with the people you love, and for helping children in Syria along the way. You made it real. If you have ordered from us before, we will be in touch when we are back.</p>",
+    farewellSign: "With love, Trondheim Cookies ♥",
     brandSub: "Made in Norway",
     navCookies: "Our cookies", navBuild: "Build your own", navOrder: "Order", navPromise: "Our promise",
     basket: "Basket",
@@ -264,7 +268,11 @@ const I18N = {
     mailBuild: "build-your-own",
   },
   no: {
-    ribbon: "<b>10%</b> av hver cookie går til barn i nød i Syria. Kjøp med mening.",
+    ribbon: "<b>Fra 4. juli</b> tar vi en pause. Takk for hver cookie, og for at du hjalp barn i Syria. Vi håper å være tilbake. ♥",
+    farewellFirst: "Tusen takk, Trondheim. Dette er ikke et farvel.",
+    farewellTitle: "Fra 4. juli hviler ovnen en liten stund. ♥",
+    farewellBody: "<p>Fra 4. juli tar vi en pause. Ovnen får hvile en stund, men vi håper virkelig å fyre den opp igjen og bake for deg en gang til.</p><p>Det hele startet som noe lite. Vi ville bare utgjøre en liten forskjell for barn i nød i Syria, og legge en varm, håndlaget cookie i hendene dine, rett og slett fordi vi elsker å spre litt godhet.</p><p>Med hver cookie du bestilte, hjalp du oss å gjøre nettopp det. Og det var hele poenget.</p><p>Takk for at du smakte på det vi laget, for at du delte det med dem du er glad i, og for at du hjalp barn i Syria på veien. Du gjorde det ekte. Har du bestilt fra oss før, tar vi kontakt når vi er tilbake.</p>",
+    farewellSign: "Med kjærlighet, Trondheim Cookies ♥",
     brandSub: "Laget i Norge",
     navCookies: "Våre cookies", navBuild: "Lag din egen", navOrder: "Bestill", navPromise: "Vårt løfte",
     basket: "Handlekurv",
@@ -423,7 +431,11 @@ const I18N = {
     mailBuild: "lag din egen",
   },
   ar: {
-    ribbon: "<b>10%</b> من كل كوكي يذهب لأطفال سوريا المحتاجين. اشترِ بمعنى.",
+    ribbon: "<b>من الرابع من يوليو</b> نأخذ استراحة. شكراً على كل كوكي، ولمساعدتكم أطفال سوريا. نأمل أن نعود. ♥",
+    farewellFirst: "شكراً لكم يا تروندهايم. هذا ليس وداعاً.",
+    farewellTitle: "من الرابع من يوليو، يرتاح الفرن لبعض الوقت. ♥",
+    farewellBody: "<p>من الرابع من يوليو سنأخذ استراحة. سيرتاح الفرن لبعض الوقت، لكننا نأمل حقاً أن نشعله من جديد ونخبز لكم مرة أخرى.</p><p>بدأ كل شيء كفكرة صغيرة. أردنا فقط أن نصنع فرقاً بسيطاً لأطفال سوريا المحتاجين، وأن نضع كوكي دافئة مصنوعة يدوياً بين يديك، ببساطة لأننا نحب نشر القليل من المحبة.</p><p>مع كل كوكي طلبتها، ساعدتنا على فعل ذلك تماماً. وكان هذا هو الهدف كله.</p><p>شكراً لأنكم تذوقتم ما صنعناه، ولمشاركته مع من تحبون، ولمساعدتكم أطفال سوريا في الطريق. أنتم جعلتم الأمر حقيقياً. وإن كنت قد طلبت منا من قبل، فسنتواصل معك عندما نعود.</p>",
+    farewellSign: "مع المحبة، تروندهايم كوكيز ♥",
     brandSub: "صُنع في النرويج",
     navCookies: "الكوكيز", navBuild: "اصنع كوكيتك", navOrder: "اطلب", navPromise: "وعدنا",
     navEvents: "المناسبات", navReviews: "التقييمات",
