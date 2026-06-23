@@ -288,6 +288,8 @@
   .row.free-row { color:var(--give); font-weight:600; display:flex; align-items:center; justify-content:space-between; }
   .row.free-row > span:first-child { display:inline-flex; align-items:center; gap:7px; }
   .row.free-row i { width:15px; height:15px; }
+  .totals #delivRow > span:first-child { display:inline-flex; align-items:center; gap:7px; }
+  .totals #delivRow i, .totals #delivRow svg { width:15px; height:15px; }
   .deal-nudge { display:flex; align-items:center; gap:8px; margin-top:14px; background:var(--amber-soft); color:var(--amber-deep); border-radius:12px; padding:10px 14px; font-size:0.86rem; font-weight:600; }
 
   /* ---- video showcase ---- */
@@ -580,6 +582,7 @@
         <div class="totals" id="totals" style="display:none">
           <div class="row"><span id="countLine">0 cookies</span><span id="subtotal">0 kr</span></div>
           <div class="row free-row" id="freeRow" style="display:none"><span><i data-lucide="gift"></i> <span id="freeLabel">Free cookies</span></span><span id="freeAmt">0 kr</span></div>
+          <div class="row" id="delivRow"><span><i data-lucide="truck"></i> <span id="delivLabel" data-i18n="delivLabel">Delivery</span></span><span id="delivAmt">0 kr</span></div>
           <div class="row give-row"><span><i data-lucide="heart"></i> <span data-i18n="giveLine">Goes to children in need in Syria</span></span><span id="giveAmt">0 kr</span></div>
           <div class="row big"><span data-i18n="totalLine">Total</span><span id="grandTotal">0 kr</span></div>
         </div>

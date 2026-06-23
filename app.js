@@ -12,6 +12,16 @@ const ORDER_EMAIL = "trondheimcookie@gmail.com";
 const PRICE = 59;
 const GIVE_PCT = 0.10; // 10% to children in need in Syria
 
+/* ---- Delivery ----
+   Free inside the central zone (Midtbyen, Solsiden, Møllenberg, Bakklandet) or
+   within 2 km of our base, and free on orders over 9 cookies. Otherwise 39 kr.
+   Base: Computas Trondheim, Nordre Berggate 2, 7014 Trondheim. */
+const DELIVERY_FEE = 39;          // kr, for addresses outside the free zone
+const FREE_OVER_QTY = 9;          // orders over 9 cookies ship free
+const FREE_RADIUS_KM = 2;         // free within 2 km of the base
+const ORIGIN = { lat: 63.4304894, lng: 10.4074083 };
+const FREE_AREAS = ["midtbyen", "solsiden", "møllenberg", "mollenberg", "bakklandet"];
+
 /* ---- Language ---- */
 let LANG = localStorage.getItem("tc_lang") || "en";
 if (LANG !== "en" && LANG !== "no" && LANG !== "ar") LANG = "en";
@@ -218,6 +228,12 @@ const I18N = {
     guaranteeNote: "Not happy with your cookies? Tell us and we'll make it right. Your satisfaction always comes first.",
     delivFree: "\u2713 Free delivery in Midtbyen, Solsiden, M\u00f8llenberg & Bakklandet",
     delivNudge: (n) => `Add ${n} more cookie${n > 1 ? "s" : ""} for free delivery`,
+    delivLabel: "Delivery",
+    delivFreeWord: "Free",
+    delivPending: "From your address",
+    submitSending: "Sending…",
+    mailDeliveryLine: (fee) => `Delivery: ${fee > 0 ? kr(fee) : "Free"}`,
+    mailDistanceLine: (km) => `Distance from base: ${km.toFixed(1)} km`,
     evFormTitle: "Let's plan it together",
     evFormHint: "Tell us a little about your event and we'll come back with ideas and a quote. No commitment, just a chat.",
     evOccasion: "Occasion",
@@ -371,6 +387,12 @@ const I18N = {
     guaranteeNote: "Ikke fornøyd med cookiene? Si ifra, så ordner vi opp. Din tilfredshet kommer alltid først.",
     delivFree: "\u2713 Gratis levering i Midtbyen, Solsiden, Møllenberg & Bakklandet",
     delivNudge: (n) => `Legg til ${n} cookie${n > 1 ? "s" : ""} til for gratis levering`,
+    delivLabel: "Levering",
+    delivFreeWord: "Gratis",
+    delivPending: "Fra adressen din",
+    submitSending: "Sender…",
+    mailDeliveryLine: (fee) => `Levering: ${fee > 0 ? kr(fee) : "Gratis"}`,
+    mailDistanceLine: (km) => `Avstand fra basen: ${km.toFixed(1)} km`,
     evFormTitle: "La oss planlegge sammen",
     evFormHint: "Fortell oss litt om arrangementet, så kommer vi tilbake med idéer og et pristilbud. Ingen forpliktelser, bare en prat.",
     evOccasion: "Anledning",
@@ -525,6 +547,12 @@ const I18N = {
     guaranteeNote: "لست راضيًا عن كوكيزك؟ أخبرنا وسنصلح الأمر. رضاك دائمًا في المقام الأول.",
     delivFree: "\u2713 توصيل مجاني في ميدتبيين وسولسيدن وموللنبرغ وباكلاندت",
     delivNudge: (n) => `أضف ${n} كوكي للحصول على توصيل مجاني`,
+    delivLabel: "التوصيل",
+    delivFreeWord: "مجاني",
+    delivPending: "حسب عنوانك",
+    submitSending: "جارٍ الإرسال…",
+    mailDeliveryLine: (fee) => `التوصيل: ${fee > 0 ? kr(fee) : "مجاني"}`,
+    mailDistanceLine: (km) => `المسافة من المقر: ${km.toFixed(1)} كم`,
     evFormTitle: "لنخطّط معًا",
     evFormHint: "أخبرنا قليلاً عن مناسبتك وسنعود إليك بالأفكار والسعر. بلا التزام، مجرّد دردشة.",
     evOccasion: "المناسبة",
@@ -561,6 +589,14 @@ let basket = [];          // { id, qty, custom, name?, dough?, mixins?, ref? }
 let qtySel = {};          // per-cookie stepper selection on the grid
 const build = { dough: "classic", mixins: ["choc-chips", "caramel", "sea-salt"], name: "", ref: null };
 
+/* delivery zone resolved from the address the customer types */
+let locZone = null;       // null = unknown, "free", or "fee"
+let geoKm = null;         // last computed distance from base, in km
+let geoSeq = 0;           // guards against out-of-order geocode results
+let geoInFlight = null;   // the geocode lookup currently running
+const geoCache = {};      // query -> { zone, km }, confirmed results only
+let submitting = false;   // guards against double order submits
+
 /* ---- Helpers ---- */
 const $ = (id) => document.getElementById(id);
 const kr = (n) => `${n} kr`;
@@ -572,6 +608,79 @@ function recipeText(dough, mixins) {
   return [doughLabel(d), ...mixins.map((id) => mixLabel(MIXINS.find((m) => m.id === id)))].join(" · ");
 }
 function freeCookies(count) { return count >= 9 ? 2 : count >= 5 ? 1 : 0; }
+
+/* ---- Delivery fee ---- */
+function basketCount() { return basket.reduce((s, b) => s + b.qty, 0); }
+function haversineKm(a, b) {
+  const R = 6371, rad = Math.PI / 180;
+  const dLat = (b.lat - a.lat) * rad, dLng = (b.lng - a.lng) * rad;
+  const s = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(s));
+}
+async function fetchJson(url, ms) {
+  const ctrl = new AbortController();
+  const tid = setTimeout(() => ctrl.abort(), ms || 4000);
+  try {
+    const r = await fetch(url, { headers: { Accept: "application/json" }, signal: ctrl.signal });
+    return r.ok ? await r.json() : null;
+  } catch (e) { return null; } finally { clearTimeout(tid); }
+}
+/* Geocode a Norwegian address: Kartverket first (official, no key), Nominatim as fallback. */
+async function geocodeNO(query) {
+  const geo = await fetchJson("https://ws.geonorge.no/adresser/v1/sok?treffPerSide=1&side=0&sok=" + encodeURIComponent(query));
+  const a = geo && geo.adresser && geo.adresser[0];
+  if (a && a.representasjonspunkt) return { lat: a.representasjonspunkt.lat, lng: a.representasjonspunkt.lon };
+  const osm = await fetchJson("https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=no&q=" + encodeURIComponent(query));
+  if (Array.isArray(osm) && osm[0]) return { lat: parseFloat(osm[0].lat), lng: parseFloat(osm[0].lon) };
+  return null;
+}
+/* The delivery fee that applies right now, from cookie count and the resolved zone. */
+function effectiveDelivery(count) {
+  if (count > FREE_OVER_QTY) return { fee: 0, state: "qtyfree" };
+  if (locZone === "free") return { fee: 0, state: "free" };
+  if (locZone === "fee") return { fee: DELIVERY_FEE, state: "fee" };
+  return { fee: 0, state: "pending" };
+}
+/* Whole-word match so "Møllenberg" counts but "Sentrumsvegen" or "Tiller" do not. */
+function isFreeArea(hay) {
+  const tokens = hay.split(/[^\p{L}]+/u).filter(Boolean);
+  return tokens.some((tok) => FREE_AREAS.includes(tok));
+}
+/* Work out whether the typed address is inside the free zone or the 2 km radius. */
+async function resolveLocZone() {
+  const count = basketCount();
+  if (count > FREE_OVER_QTY) { renderBasket(); return; }   // free wherever it goes
+  const address = ($("fAddress") ? $("fAddress").value : "").trim();
+  const area = ($("fArea") ? $("fArea").value : "").trim();
+  if (!address && !area) { locZone = null; geoKm = null; renderBasket(); return; }
+  if (isFreeArea((address + " " + area).toLowerCase())) { locZone = "free"; geoKm = null; renderBasket(); return; }
+  const query = [address, area, "Trondheim"].filter(Boolean).join(", ");
+  const cached = geoCache[query];
+  if (cached) { locZone = cached.zone; geoKm = cached.km; renderBasket(); return; }
+  if (geoInFlight && geoInFlight.query === query) { await geoInFlight.promise; renderBasket(); return; }
+  const myReq = ++geoSeq;
+  const promise = geocodeNO(query);
+  geoInFlight = { query, promise };
+  const loc = await promise;
+  if (geoInFlight && geoInFlight.query === query) geoInFlight = null;
+  if (myReq !== geoSeq) { renderBasket(); return; }   // superseded by a newer address
+  if (loc) {
+    const km = haversineKm(ORIGIN, loc);
+    geoKm = km;
+    locZone = km <= FREE_RADIUS_KM ? "free" : "fee";
+    geoCache[query] = { zone: locZone, km };           // cache confirmed results only
+  } else {
+    geoKm = null;
+    locZone = "fee";   // could not place the address: treat as outside, retried next time
+  }
+  renderBasket();
+}
+/* Auto-resolve the zone once an address is present (e.g. after the basket changes). */
+function maybeResolveZone() {
+  if (geoInFlight || locZone !== null || basketCount() > FREE_OVER_QTY) return;
+  const hasAddr = (($("fAddress") && $("fAddress").value.trim()) || ($("fArea") && $("fArea").value.trim()));
+  if (hasAddr) resolveLocZone();
+}
 
 let toastTimer;
 function toast(msg) {
@@ -905,14 +1014,23 @@ function renderBasket() {
   const subtotal = count * PRICE;
   const free = freeCookies(count);
   const discount = free * PRICE;
-  const total = subtotal - discount;
-  const give = Math.round(total * GIVE_PCT);
+  const cookiesTotal = subtotal - discount;
+  const give = Math.round(cookiesTotal * GIVE_PCT);
+  const dlv = effectiveDelivery(count);
+  const total = cookiesTotal + dlv.fee;
   $("countLine").textContent = `${count} ${count === 1 ? t("cookieSing") : t("cookiePlur")}`;
   $("subtotal").textContent = kr(subtotal);
   const freeRow = $("freeRow");
   if (freeRow) {
     if (free > 0) { freeRow.style.display = "flex"; $("freeLabel").textContent = `${t("freeLine")} (${free})`; $("freeAmt").textContent = "-" + kr(discount); }
     else freeRow.style.display = "none";
+  }
+  const delivRow = $("delivRow");
+  if (delivRow) {
+    $("delivLabel").textContent = t("delivLabel");
+    if (dlv.state === "fee") { delivRow.classList.remove("free-row"); $("delivAmt").textContent = kr(dlv.fee); }
+    else if (dlv.state === "pending") { delivRow.classList.remove("free-row"); $("delivAmt").textContent = t("delivPending"); }
+    else { delivRow.classList.add("free-row"); $("delivAmt").textContent = t("delivFreeWord"); }
   }
   $("giveAmt").textContent = kr(give);
   $("grandTotal").textContent = kr(total);
@@ -927,6 +1045,7 @@ function renderBasket() {
     nudge.style.display = "flex";
   }
   $("totals").style.display = "block";
+  maybeResolveZone();
   icons();
 }
 function basketQty(i, d) {
@@ -938,9 +1057,20 @@ function basketQty(i, d) {
 /* ============================================================
    ORDER -> EMAIL  (no payment; bakery delivers & collects)
    ============================================================ */
-function submitOrder(e) {
+async function submitOrder(e) {
   e.preventDefault();
+  if (submitting) return false;
   if (basket.length === 0) { toast(t("toastFirst")); scrollToId("cookies"); return false; }
+
+  submitting = true;
+  const btn = $("submitBtn");
+  const lbl = btn ? btn.querySelector("span") : null;
+  const prevLbl = lbl ? lbl.textContent : "";
+  if (btn) btn.disabled = true;
+  if (lbl) lbl.textContent = t("submitSending");
+  try {
+  // lock in the delivery fee for the address that was just entered
+  await resolveLocZone();
 
   const name = $("fName").value.trim();
   const email = $("fEmail").value.trim();
@@ -953,8 +1083,10 @@ function submitOrder(e) {
   const subtotal = count * PRICE;
   const free = freeCookies(count);
   const discount = free * PRICE;
-  const total = subtotal - discount;
-  const give = Math.round(total * GIVE_PCT);
+  const cookiesTotal = subtotal - discount;
+  const give = Math.round(cookiesTotal * GIVE_PCT);
+  const dlv = effectiveDelivery(count);
+  const total = cookiesTotal + dlv.fee;
 
   const lines = basket.map((b) =>
     `• ${b.qty} × ${itemName(b)}${b.custom ? ` (${t("mailBuild")}: ${recipeText(b.dough, b.mixins)})` : ""}${b.custom && b.ref ? ` [+ reference: ${b.ref.name}]` : ""} · ${kr(b.qty * PRICE)}`
@@ -973,7 +1105,8 @@ ${t("mailOrder")}
 ${lines}
 
 ${t("mailSubtotalLine")(count, kr(subtotal))}
-${free ? t("mailFreeLine")(free, kr(discount)) + "\n" : ""}${t("mailGiveLine")(kr(give))}
+${free ? t("mailFreeLine")(free, kr(discount)) + "\n" : ""}${t("mailDeliveryLine")(dlv.fee)}
+${t("mailGiveLine")(kr(give))}
 ${t("mailTotalLine")(kr(total))}
 ${refBlock}
 ${t("mailDelivery")}
@@ -981,7 +1114,7 @@ ${t("mailName")}:    ${name}
 Email: ${email}
 ${t("mailAddr")}: ${address}
 ${t("mailArea")}:    ${area || "-"}
-${t("mailWhen")}:    ${when || "-"}
+${dlv.state !== "qtyfree" && geoKm != null ? t("mailDistanceLine")(geoKm) + "\n" : ""}${t("mailWhen")}:    ${when || "-"}
 ${t("mailNotes")}:   ${notes || "-"}
 
 ${t("mailThanks")}`;
@@ -991,6 +1124,11 @@ ${t("mailThanks")}`;
   sendToBakery({ subject, text: body, replyTo: email });
 
   $("success").classList.add("show");
+  } finally {
+    submitting = false;
+    if (btn) btn.disabled = false;
+    if (lbl) lbl.textContent = prevLbl;
+  }
   return false;
 }
 
@@ -1127,6 +1265,8 @@ function init() {
   const bn = $("buildName"); if (bn) bn.addEventListener("input", updatePreview);
   const inp = $("refInput");
   if (inp) inp.addEventListener("change", () => handleRefUpload(inp));
+  const addrEl = $("fAddress"); if (addrEl) addrEl.addEventListener("blur", resolveLocZone);
+  const areaEl = $("fArea"); if (areaEl) areaEl.addEventListener("blur", resolveLocZone);
   const filmVid = document.querySelector("#film video");
   if (filmVid) { filmVid.play().catch(() => {}); }
   icons();
