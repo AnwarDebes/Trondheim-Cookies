@@ -1,6 +1,6 @@
 /* ============================================================
    TRONDHEIM COOKIES, storefront logic
-   10 signature cookies · 3D build-your-own · basket · order-by-email.
+   12 signature cookies · 3D build-your-own · basket · order-by-email.
    No payment: orders are emailed to the bakery, paid on delivery.
    Bilingual: English (default) and Norwegian.
    ============================================================ */
@@ -26,9 +26,10 @@ const FREE_AREAS = ["midtbyen", "solsiden", "møllenberg", "mollenberg", "bakkla
 let LANG = localStorage.getItem("tc_lang") || "en";
 if (LANG !== "en" && LANG !== "no" && LANG !== "ar") LANG = "en";
 
-/* ---- The 10 signature cookies ----
-   Each has a cool name + a short description in both languages, based on
-   the real photos in img/cookie-vm.jpg and img/cookie-1.jpg … cookie-9.jpg */
+/* ---- The 12 signature cookies ----
+   Each has a cool name + a short description in both languages, based on the
+   real photos in img/cookie-vm.jpg, img/cookie-1.jpg … cookie-9.jpg, plus
+   img/cookie-biscoff.jpg and img/cookie-normal.jpg                          */
 const COOKIES = [
   { id: "vm", img: "img/cookie-vm.jpg", stuffed: true,
     name: { en: "VM-Cookie", no: "VM-Cookie", ar: "في إم كوكي" },
@@ -80,6 +81,16 @@ const COOKIES = [
     desc: { en: "Toasted marshmallow and milk chocolate stuffed inside and torched on top. A true s'more, all the way through.",
             no: "Ristet marshmallow og melkesjokolade fylt inni og brent på toppen. En ekte s'more, hele veien.",
             ar: "مارشميلو محمّص وشوكولاتة بالحليب محشوة في الداخل ومحروقة فوقها. سمور حقيقي من الداخل إلى الخارج." } },
+  { id: "biscoff", img: "img/cookie-biscoff.jpg", stuffed: true,
+    name: { en: "The Biscoff Avalanche", no: "Biscoff-skredet", ar: "كوكي بيسكوف" },
+    desc: { en: "Smooth Lotus Biscoff stuffed through the middle and poured over a soft chocolate-chip cookie, then crowned with a whole Biscoff biscuit. The inside matches the top.",
+            no: "Silkemyk Lotus Biscoff fylt i midten og helt over en myk sjokoladecookie, kronet med en hel Biscoff-kjeks. Det samme inni som på toppen.",
+            ar: "بيسكوف لوتس الناعم محشو في المنتصف ومسكوب فوق كوكي طري بقطع الشوكولاتة، ومتوّج بقطعة بيسكوف كاملة. الداخل يطابق الأعلى." } },
+  { id: "normal", img: "img/cookie-normal.jpg", stuffed: false,
+    name: { en: "The OG Chocolate Chip", no: "Den klassiske sjokoladecookien", ar: "كوكي الشوكولاتة الكلاسيكي" },
+    desc: { en: "Our timeless classic: soft, thick browned-butter dough loaded with melty chocolate chunks. No filling, no fuss, just a perfect chocolate-chip cookie.",
+            no: "Vår tidløse klassiker: myk, tykk deig med brunet smør, full av smeltende sjokoladebiter. Ingen fyll, ingen dikkedarer, bare en perfekt sjokoladecookie.",
+            ar: "كلاسيكيتنا الخالدة: عجينة طرية وسميكة بزبدة بنية مليئة بقطع الشوكولاتة الذائبة. بلا حشو وبلا تعقيد، فقط كوكي شوكولاتة مثالي." } },
 ];
 const cookieName = (c) => (c.name[LANG] || c.name.en);
 const cookieDesc = (c) => (c.desc[LANG] || c.desc.en);
@@ -128,7 +139,7 @@ const I18N = {
     impactBody: "You order cookies you love. A tenth of what you pay goes straight to helping kids in need in Syria. No catch, just kindness baked in.",
     impactPill: "Every order makes a difference",
     cookiesEyebrow: "Our cookies",
-    cookiesTitle: "Ten to choose from",
+    cookiesTitle: "Twelve to choose from",
     cookiesBody: "Big, stuffed, over-the-top cookies. Pick your favourites, choose how many, and we'll bake and deliver them fresh across Trondheim.",
     photoSoon: "Photo coming soon",
     giveTag: "10% gives", addBtn: "Add",
@@ -291,7 +302,7 @@ const I18N = {
     impactBody: "Du bestiller cookies du elsker. En tidel av det du betaler går rett til å hjelpe barn i nød i Syria. Ingen hake, bare godhet bakt inn.",
     impactPill: "Hver bestilling utgjør en forskjell",
     cookiesEyebrow: "Våre cookies",
-    cookiesTitle: "Ti å velge mellom",
+    cookiesTitle: "Tolv å velge mellom",
     cookiesBody: "Store, fylte, over-the-top cookies. Velg favorittene dine, bestem antall, så baker og leverer vi dem ferske i hele Trondheim.",
     photoSoon: "Bilde kommer snart",
     giveTag: "10% gir", addBtn: "Legg til",
@@ -455,7 +466,7 @@ const I18N = {
     impactBody: "تطلب كوكيز تحبها. عُشر ما تدفعه يذهب مباشرة لمساعدة أطفال سوريا المحتاجين. بلا شروط، فقط لطف مخبوز بالداخل.",
     impactPill: "كل طلب يصنع فرقًا",
     cookiesEyebrow: "الكوكيز",
-    cookiesTitle: "عشرة للاختيار منها",
+    cookiesTitle: "اثنا عشر للاختيار منها",
     cookiesBody: "كوكيز كبيرة ومحشوة وفخمة. اختر مفضّلاتك، حدّد العدد، ونخبزها ونوصّلها طازجة في كل تروندهايم.",
     photoSoon: "الصورة قريبًا",
     giveTag: "10% تعطي", addBtn: "أضف",

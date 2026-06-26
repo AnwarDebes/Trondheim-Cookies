@@ -1,7 +1,7 @@
 # Trondheim Cookies 🍪
 
 A warm, simple cookie-ordering website. Made in Norway, delivered in Trondheim.
-**20% of every cookie goes to children in Syria.** Buy with meaning.
+**10% of every cookie goes to children in Syria.** Buy with meaning.
 
 No payment online - customers choose cookies (or build their own), enter their
 Trondheim delivery details, and the order is emailed to the bakery. We deliver
@@ -16,7 +16,7 @@ site/
 ├── index.html     ← the whole website (markup + styling)
 ├── app.js         ← cookies, build-your-own, basket, order-by-email logic
 ├── styles.css     ← fonts + design tokens
-├── img/           ← the 10 cookie photos (see img/README.txt)
+├── img/           ← the 12 cookie photos (see img/README.txt)
 ├── vercel.json    ← Vercel config
 └── package.json   ← optional, for `npx serve` local preview
 ```
@@ -34,12 +34,12 @@ Icons load from a CDN (Lucide). No build step, no backend, no `npm install`.
    Every order opens in the customer's email app, pre-addressed to this address.
 
 2. **Cookie photos & names** -
-   - Add 10 square photos to `site/img/` named `cookie-vm.jpg` and `cookie-1.jpg` … `cookie-9.jpg`
+   - Add 12 square photos to `site/img/` named `cookie-vm.jpg`, `cookie-biscoff.jpg`, `cookie-normal.jpg` and `cookie-1.jpg` … `cookie-9.jpg`
      (see `img/README.txt`). Until then, a friendly "Photo coming soon" shows.
    - Cookie names are placeholders (`Cookie No. 1` …). Edit the `COOKIES` list
      near the top of `app.js` to set the real names and details.
 
-   **Price** is set once in `app.js`: `const PRICE = 39;` (Norwegian kroner). Change as needed.
+   **Price** is set once in `app.js`: `const PRICE = 59;` (Norwegian kroner). Change as needed.
 
 ---
 
@@ -73,7 +73,7 @@ npx serve .        # → http://localhost:3000
 
 ## How the order flow works
 - Customer adds cookies (quantity steppers) and/or builds a custom cookie.
-- Basket shows the count, the subtotal, and the 20% going to Syria.
+- Basket shows the count, the subtotal, and the 10% going to Syria.
 - They fill in name, phone, Trondheim address, and optional day/time + notes.
 - **Send my order** opens their email app with the full order pre-written to the
   bakery email. They press send; we bake and deliver.

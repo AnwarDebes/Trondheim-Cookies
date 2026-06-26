@@ -1,8 +1,10 @@
 # Trondheim Cookies - photos go here
 
-Add your 10 cookie photos in this folder, named exactly:
+Add your 12 cookie photos in this folder, named exactly:
 
     cookie-vm.jpg
+    cookie-biscoff.jpg
+    cookie-normal.jpg
     cookie-1.jpg
     cookie-2.jpg
     cookie-3.jpg
