@@ -1,6 +1,6 @@
 /* ============================================================
    TRONDHEIM COOKIES, storefront logic
-   9 signature cookies · 3D build-your-own · basket · order-by-email.
+   10 signature cookies · 3D build-your-own · basket · order-by-email.
    No payment: orders are emailed to the bakery, paid on delivery.
    Bilingual: English (default) and Norwegian.
    ============================================================ */
@@ -26,10 +26,15 @@ const FREE_AREAS = ["midtbyen", "solsiden", "møllenberg", "mollenberg", "bakkla
 let LANG = localStorage.getItem("tc_lang") || "en";
 if (LANG !== "en" && LANG !== "no" && LANG !== "ar") LANG = "en";
 
-/* ---- The 9 signature cookies ----
+/* ---- The 10 signature cookies ----
    Each has a cool name + a short description in both languages, based on
-   the real photos in img/cookie-1.jpg … cookie-9.jpg                     */
+   the real photos in img/cookie-vm.jpg and img/cookie-1.jpg … cookie-9.jpg */
 const COOKIES = [
+  { id: "vm", img: "img/cookie-vm.jpg", stuffed: true,
+    name: { en: "VM-Cookie", no: "VM-Cookie", ar: "في إم كوكي" },
+    desc: { en: "Our flag-flying favourite: soft browned-butter dough generously filled with rich, gooey Nutella inside and crowned with a hand made Norwegian flag on top. Pure Nutella all the way through.",
+            no: "Vår flaggbærende favoritt: myk deig med brunet smør, sjenerøst fylt med deilig, seig Nutella inni og kronet med et håndlaget norsk flagg på toppen. Ren Nutella hele veien.",
+            ar: "المفضّلة الحاملة للعلم لدينا: عجينة طرية بزبدة بنية محشوة بسخاء بالنوتيلا الغنية واللزجة من الداخل، ومتوّجة بعلم نرويجي مصنوع يدويًا في الأعلى. نوتيلا خالصة من الداخل إلى الخارج." } },
   { id: "c1", img: "img/cookie-1.jpg", stuffed: false,
     name: { en: "Molten Truffle Bomb", no: "Smeltende Trøffelbombe", ar: "كوكي الترافل" },
     desc: { en: "Our one plain cookie, kept simple on purpose: soft browned-butter dough crowned with milk-chocolate ganache and a cocoa-dusted truffle on top.",
@@ -123,7 +128,7 @@ const I18N = {
     impactBody: "You order cookies you love. A tenth of what you pay goes straight to helping kids in need in Syria. No catch, just kindness baked in.",
     impactPill: "Every order makes a difference",
     cookiesEyebrow: "Our cookies",
-    cookiesTitle: "Nine to choose from",
+    cookiesTitle: "Ten to choose from",
     cookiesBody: "Big, stuffed, over-the-top cookies. Pick your favourites, choose how many, and we'll bake and deliver them fresh across Trondheim.",
     photoSoon: "Photo coming soon",
     giveTag: "10% gives", addBtn: "Add",
@@ -286,7 +291,7 @@ const I18N = {
     impactBody: "Du bestiller cookies du elsker. En tidel av det du betaler går rett til å hjelpe barn i nød i Syria. Ingen hake, bare godhet bakt inn.",
     impactPill: "Hver bestilling utgjør en forskjell",
     cookiesEyebrow: "Våre cookies",
-    cookiesTitle: "Ni å velge mellom",
+    cookiesTitle: "Ti å velge mellom",
     cookiesBody: "Store, fylte, over-the-top cookies. Velg favorittene dine, bestem antall, så baker og leverer vi dem ferske i hele Trondheim.",
     photoSoon: "Bilde kommer snart",
     giveTag: "10% gir", addBtn: "Legg til",
@@ -450,7 +455,7 @@ const I18N = {
     impactBody: "تطلب كوكيز تحبها. عُشر ما تدفعه يذهب مباشرة لمساعدة أطفال سوريا المحتاجين. بلا شروط، فقط لطف مخبوز بالداخل.",
     impactPill: "كل طلب يصنع فرقًا",
     cookiesEyebrow: "الكوكيز",
-    cookiesTitle: "تسعة للاختيار منها",
+    cookiesTitle: "عشرة للاختيار منها",
     cookiesBody: "كوكيز كبيرة ومحشوة وفخمة. اختر مفضّلاتك، حدّد العدد، ونخبزها ونوصّلها طازجة في كل تروندهايم.",
     photoSoon: "الصورة قريبًا",
     giveTag: "10% تعطي", addBtn: "أضف",

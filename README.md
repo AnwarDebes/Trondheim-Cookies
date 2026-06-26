@@ -16,7 +16,7 @@ site/
 ├── index.html     ← the whole website (markup + styling)
 ├── app.js         ← cookies, build-your-own, basket, order-by-email logic
 ├── styles.css     ← fonts + design tokens
-├── img/           ← the 9 cookie photos (see img/README.txt)
+├── img/           ← the 10 cookie photos (see img/README.txt)
 ├── vercel.json    ← Vercel config
 └── package.json   ← optional, for `npx serve` local preview
 ```
@@ -34,7 +34,7 @@ Icons load from a CDN (Lucide). No build step, no backend, no `npm install`.
    Every order opens in the customer's email app, pre-addressed to this address.
 
 2. **Cookie photos & names** -
-   - Add 9 square photos to `site/img/` named `cookie-1.jpg` … `cookie-9.jpg`
+   - Add 10 square photos to `site/img/` named `cookie-vm.jpg` and `cookie-1.jpg` … `cookie-9.jpg`
      (see `img/README.txt`). Until then, a friendly "Photo coming soon" shows.
    - Cookie names are placeholders (`Cookie No. 1` …). Edit the `COOKIES` list
      near the top of `app.js` to set the real names and details.
